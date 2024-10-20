@@ -24,6 +24,7 @@ images = {
    placeholder: "placeholder.png",
 }
 GAMENAME = "name of your game or app here";
+FONT = "name of your font";        - - - optional, only if you have a custom font
 wggjLoadImages();
 wggjLoop();
 
@@ -56,6 +57,7 @@ var wggjTextScaling = 1;
 var wggjCanvasWidth = 0;
 var wggjCanvasHeight = 0;
 
+var FONT = "Times";
 var GAMENAME = "";
 var currentScene = "none";
 
@@ -207,7 +209,7 @@ class Text {
         if (this.power == false) return false;
 
         wggjCTX.fillStyle = this.color;
-        wggjCTX.font = (this.size * wggjTextScaling) + "px Times";
+        wggjCTX.font = (this.size * wggjTextScaling) + "px " + FONT;
         wggjCTX.textBaseline = "bottom";
         wggjCTX.textAlign = this.align;
 
@@ -263,7 +265,7 @@ function wggjLoop() {
     wggjCTX.imageSmoothingEnabled = false;
 
     // Your own custom loop function
-    if (typeof(loop) != "undefined") loop();
+    if (typeof (loop) != "undefined") loop(wggjDelta);
 
     if (currentScene != "none") {
         // render the current scene
@@ -289,7 +291,7 @@ function wggjLoop() {
 }
 
 function wggjLoadedScene() {
-    wggjCTX.font = "40px Times";
+    wggjCTX.font = "40px " + FONT;
     wggjCTX.fillStyle = "white";
     wggjCTX.textBaseline = "bottom";
     wggjCTX.textAlign = "center";
