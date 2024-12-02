@@ -37,17 +37,19 @@ example: createSquare ("mySquare1", 0, 0, 1, 1, "black");
 
 config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
+- clickableOnly: when turned to true, it becomes a clickable
 
 ### Clickable
-This creates a simple clickable area
+This creates a simple clickable area (invisible square)
 
 Can be clicked, but is invisible
 
 
-createClickable(clickableName, x, y, w, h, onClick);
+createClickable(clickableName, x, y, w, h, onClick, config = {});
 
 example: createClickable("myClickable1", 0, 0, 1, 1, () => { console.log("Screen clicked!") });
-no config
+config:
+- same as createSquare
 
 ### Image
 This creates an image
@@ -90,6 +92,7 @@ config:
 - size: font size, default is 12px
 - align: horizontal text align, default is center
 - power: when turned to false, it becomes invisible/unclickable (disabled)
+- noScaling: when turned to true, it does not scale with screen width
 
 ## Magic
 ### Changing objects
@@ -100,7 +103,7 @@ Objects can be changed very easily, here are three examples:
 
 ### Adding variables to objects
 Variables can be added to objects pretty easily. This makes it possible to access them from the loop. Example:
-- clickables["myClickable1"].timesClicked = 0;
+- objects["myClickable1"].timesClicked = 0;
 
 ### Self-reference in onClick
 If you want an object to reference itself in its own onClick function, use c:
@@ -116,8 +119,31 @@ If you want an object to reference itself in its own onClick function, use c:
 ### v1.0
 - Release
 
+### v1.1
+Released on 2024-12-02
+-> New content:
+- REMOVED clickables and integrated them into objects
+- ADDED onHold, the swipier version of onClick
+- Added support for canvases that don't cover the entire screen: use wggjCanvasDesiredWidthMulti and wggjCanvasDesiredHeightMulti to adjust its size, temporarily or permanent
+- Added wggjImageSmoothing... in case you want to turn that thing on
+
+-> New configs:
+- All: onClick & onHold
+- Text: Added noScaling config (true/false) - for all your tight space needs
+- Square: Added clickableOnly config (true/false) - makes it ALWAYS invisible (like clickables before)
+
+-> Improvements:
+- Changed text scaling formula for smooth 1 - 0.5 between PC - mobile
+- Added a background for the loading screen
+- Optimized Text and Square rendering (not Image (yet))
+- Minor improvements
+
+-> Compability notes:
+- Note the following things when updating from v1.0 to v1.1:
+- IMPORTANT: clickables[] has been removed entirely and integrated into objects[] - change all clickables[ to objects[ (createClickable still exists) and make sure nothing becomes a duplicate in objects now. also change clickables[x](y) or clickables[x][0] syntax
+- Text scaling was changed, you may want to adjust it or use noScaling for certain elements
+
 ### Future plans
 - More customization
-- Power on/off for clickables?
 - Better audio support
 - Animations

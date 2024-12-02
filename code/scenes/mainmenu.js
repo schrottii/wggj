@@ -51,8 +51,8 @@ scenes["mainmenu"] = new Scene(
         if (page == 1) objects["mySquare1"].y = 0;
         else objects["mySquare1"].y = 100;
 
-        if (page == 2) clickables["myClickable1"].y = 0;
-        else clickables["myClickable1"].y = 100;
+        if (page == 2) objects["myClickable1"].y = 0;
+        else objects["myClickable1"].y = 100;
 
         if (page == 3) objects["myImage1"].power = true;
         else objects["myImage1"].power = false;
