@@ -63,8 +63,11 @@ var wggjCanvasWidth = 0;
 var wggjCanvasHeight = 0;
 
 // change these two with some function to make the canvas not take up the entire screen, temporarily or permanent
-var wggjCanvasDesiredWidthMulti = 1;
-var wggjCanvasDesiredHeightMulti = 1;
+var wggjCanvasDesiredMobileWidthMulti = 1;
+var wggjCanvasDesiredPCWidthMulti = 1;
+var wggjCanvasDesiredMobileHeightMulti = 1;
+var wggjCanvasDesiredPCHeightMulti = 1;
+var wggjCanvasDesiredSquare = false;
 
 var FONT = "Times";
 var GAMENAME = "";
@@ -317,13 +320,13 @@ function wggjLoop() {
     // Resize the wggjCanvas
     if (window.innerWidth <= 480) {
         // mobile
-        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredWidthMulti) + "px";
-        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = window.innerWidth * wggjCanvasDesiredHeightMulti) + "px";
+        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredMobileWidthMulti) + "px";
+        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredMobileHeightMulti) + "px";
     }
     else {
         // PC
-        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredWidthMulti) + "px";
-        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = window.innerWidth * wggjCanvasDesiredHeightMulti) + "px";
+        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredPCWidthMulti) + "px";
+        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredPCHeightMulti) + "px";
     }
 
     wggjCanvasWidth = window.innerWidth;
