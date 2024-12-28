@@ -1,4 +1,11 @@
-var coins = 0;
+function changeHeaderRandomly() {
+    objects["header1"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1]
+    objects["header1"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1]
+    objects["header1"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1]
+    objects["header2"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1]
+    objects["header2"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1]
+    objects["header2"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1]
+}
 
 scenes["mainmenu"] = new Scene(
     () => {
@@ -8,6 +15,10 @@ scenes["mainmenu"] = new Scene(
         // This creates a square that covers the entire background
         createSquare("bg", 0, 0, 1, 1, "green");
 
+        // Header
+        createText("header1", 0.5, 0.1, "WGGJ Showcase", { size: 48 });
+        createText("header2", 0.5, 0.15, "Part 1: Introduction & Text", { size: 32 });
+
         // Display current page
         // and add the var to the object (allows global access)
         createText("currentPage", 0.5, 0.875, "", { size: 80 });
@@ -16,9 +27,11 @@ scenes["mainmenu"] = new Scene(
         // Buttons to change page
         createButton("button1", 0.1, 0.8, 0.2, 0.1, "#FFFFFF", () => {
             if (objects["currentPage"].page > 1) objects["currentPage"].page--;
+            changeHeaderRandomly();
         });
         createButton("button2", 0.7, 0.8, 0.2, 0.1, "#FFFFFF", () => {
-            objects["currentPage"].page++;
+            if (objects["currentPage"].page <= 6) objects["currentPage"].page++;
+            changeHeaderRandomly();
         });
 
         // Text for the buttons (note: button text might become built-in soon)
@@ -26,12 +39,16 @@ scenes["mainmenu"] = new Scene(
         createText("buttonText1", 0.1 + 0.2 / 2, 0.875, "Previous Page", { size: 40 });
         createText("buttonText2", 0.7 + 0.2 / 2, 0.875, "Next Page", { size: 40 });
 
+        // button to get to the next part
+        createButton("partButton", 0.3, 0.6, 0.4, 0.1, "gradient", () => {
+            loadScene("exampleImages");
+        });
+        createText("partButtonText", 0.3 + 0.4 / 2, 0.65, "Next Part", { size: 40 });
+        objects["partButton"].power = false; // makes it hidden at first
+        objects["partButtonText"].power = false; // makes it hidden at first
+
         // page content for examples
-        createSquare("mySquare1", 0.4, 0, 0.1, 0.1, "black");
-        createClickable("myClickable1", 0, 0, 1, 1, () => { console.log("Screen clicked!") });
-        createImage("myImage1", 0.4, 0.4, 0.2, 0.2, "placeholder", { quadratic: true });
-        createButton("myButton1", 0, 0, 0.2, 0.2, "#FFFFFF", () => { coins += 1 }, { quadratic: true });
-        createText("myText1", 0.5, 0.5, "Hello World", { size: 40 });
+        createText("myText", 0.5, 0.5, "Hello World", { size: 24 });
 
         // This sets the audio, reduces its volume and starts it
         // (note: audio system will get reworked eventually)
@@ -48,19 +65,20 @@ scenes["mainmenu"] = new Scene(
         let page = objects["currentPage"].page;
         objects["currentPage"].text = "Page " + page;
 
-        if (page == 1) objects["mySquare1"].y = 0;
-        else objects["mySquare1"].y = 100;
+        objects["myText"].text =
+            [
+                "Welcome to the WGGJ example! (Click Next Page)",
+                "Here you can see some basic things that WGGJ is capable of.",
+                "But these basics can be used to create big things.",
+                "Some of my games, such as Rain Collector and Toasty Bird, can show what it's capable of.",
+                "For devs who want to use WGGJ, the relevant files for you are wggj.js and scenes/example.js",
+                "The rest of this is just a showcase and examples.",
+                "Press the button to get to the next part"
+            ][page - 1];
 
-        if (page == 2) objects["myClickable1"].y = 0;
-        else objects["myClickable1"].y = 100;
-
-        if (page == 3) objects["myImage1"].power = true;
-        else objects["myImage1"].power = false;
-
-        if (page == 4) objects["myButton1"].power = true;
-        else objects["myButton1"].power = false;
-
-        if (page == 5) objects["myText1"].power = true;
-        else objects["myText1"].power = false;
+        if (page == 7) {
+            objects["partButton"].power = true;
+            objects["partButtonText"].power = true;
+        }
     }
 );

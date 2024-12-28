@@ -6,7 +6,7 @@ I mostly made this for myself but anyone else can use it too. Explanation how to
 
 All it needs is one file (wggj.js), it can simply be copied. Do not edit it. The usual files like index.html are obviously needed as well. Everything is explained below.
 
-This repo includes a visual example of how it works, visit its page to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
+This repo includes a visual example of how it works, visit its page / index.html to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
 
 ### Current Version: v1.0
 
@@ -107,10 +107,22 @@ Variables can be added to objects pretty easily. This makes it possible to acces
 
 ### Self-reference in onClick
 If you want an object to reference itself in its own onClick function, use c:
-- clickables["myClickable1"].onClick = (c) => {
+- objects["myClickable1"].onClick = (c) => {
 	c.timesClicked++;
 }
 
+
+
+# Scenes
+## Basics
+A scene consists of two parts, the init and the loop. The init is called once, when the scene is loaded. This is where elements like buttons and texts are defined. The loop is consistently called every frame, and is used for ticking timers or updating objects. Both are very important, but easy to understand.
+
+A scene is called with loadScene(sceneName). The default scene has to be called mainmenu, as the game goes to the mainmenu scene when opened. Example: you want to load a scene called upgrades, so you do loadScene("upgrades").
+
+## Creating a new scene
+The scenes/example.js file here has an empty scene. I recommend copying that whenever you create a new one. Decide on a scene name, for example upgrades, and call your file that. I recommend saving it in a folder called scenes. So it could be something like code/scenes/upgrades.js 
+
+At the top you see scenes["example"]. Change example to the name of your scene. Load the scene in a html file such as index.html, like how you load other code files. Below that you see two comments, "Init" and "Loop", one of them is the init, the other is the loop.
 
 
 # Patch notes
@@ -118,6 +130,8 @@ If you want an object to reference itself in its own onClick function, use c:
 
 ### v1.0
 - Release
+
+
 
 ### v1.1
 Released on 2024-12-02
@@ -143,7 +157,25 @@ Released on 2024-12-02
 - IMPORTANT: clickables[] has been removed entirely and integrated into objects[] - change all clickables[ to objects[ (createClickable still exists) and make sure nothing becomes a duplicate in objects now. also change clickables[x](y) or clickables[x][0] syntax
 - Text scaling was changed, you may want to adjust it or use noScaling for certain elements
 
+
+
+### v1.1.1
+Released on 2024-12-28
+-> Visual Example:
+- Reworked the showcase / visual example
+- It now has multiple scenes and goes into some detail on every element
+- Texts explain how WGGJ works
+
+-> Other:
+- Added explanation for Scenes to the documentation
+
+
+
 ### Future plans
-- More customization
-- Better audio support
+- Stronger hitbox/render functions
+- Show hitboxes
+- HOVER
+- DRAGGING
+- Sound system with channels
 - Animations
+- More customization
