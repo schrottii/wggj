@@ -4,6 +4,7 @@ scenes["exampleImages"] = new Scene(
         createSquare("bg", 0, 0, 1, 1, "green");
         createText("header1", 0.5, 0.1, "WGGJ Showcase", { size: 48 });
         createText("header2", 0.5, 0.15, "Part 2: Images", { size: 32 });
+        createButton("returnToMainMenuButton", 0, 0, 0.05, 0.05, "#000000", () => { loadScene("mainmenu") });
 
         createText("currentPage", 0.5, 0.875, "", { size: 80 });
         objects["currentPage"].page = 1;

@@ -23,11 +23,11 @@ This entire repo is a barebones example of how it can work
 
 
 
-# Functions
-## All the functions explained
+# Elements
+## All the element explained
 
 ### Square
-This creates a simple single-color square
+This creates a simple single-color square element
 
 Is visible but does nothing
 
@@ -52,7 +52,7 @@ config:
 - same as createSquare
 
 ### Image
-This creates an image
+This creates an image element
 
 Is visible but can not be clicked
 
@@ -66,7 +66,7 @@ config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 
 ### Button
-This creates a button
+This creates a button element
 
 Is visible (simple color or image) and can be clicked
 
@@ -79,7 +79,7 @@ config:
 - NOTE: color can act as an image or a color. if it's a hex code starting with # such as #FFFFFF the button becomes a solid color, if it's anything else it's interpreted as an image
 
 ### Text
-This creates text
+This creates a text element
 
 Is visible but can not be clicked
 
@@ -93,6 +93,21 @@ config:
 - align: horizontal text align, default is center
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - noScaling: when turned to true, it does not scale with screen width
+
+### Container
+This creates a container element, which can be the parent of children objects, and be used to create a scrollable area. Invisible by default. 
+Children can be added by directly generating them with the container, or by referencing their names.
+
+createContainer(name, x, y, w, h, config, children);
+
+example: createContainer("upgradesContainer", 0, 0.2, 0.2, 0.8, { YScroll: true }, [ ... ])
+
+config:
+- color: makes it visible, background color
+- XScroll: enables scrolling on the X axis
+- YScroll: enables scrolling on the Y axis
+- XScrollMod: adjusts scroll speed on the X axis
+- YScrollMod: adjusts scroll speed on the Y axis
 
 ## Magic
 ### Changing objects
@@ -175,7 +190,53 @@ Released on 2024-12-28
 - Stronger hitbox/render functions
 - Show hitboxes
 - HOVER
-- DRAGGING
 - Sound system with channels
 - Animations
 - More customization
+
+
+
+### v1.2
+Released 2025-01-29
+-> New content:
+- New Element: Container! (See section below)
+- ADDED onUp, the on-release version of onClick
+- Functions to create elements, like createButton, now return the name of the object, if it's created, or "" if not
+- Added currentX, currentY, currentW and currentH functions for all elements except Text
+- Added wggjRunning: use it to stop the loop
+- Added wggjSceneDebug: The debug messages when loading a scene are now off by default, but can be brought back by changing the new wggjSceneDebug to true
+- Added wggjStartScene: The scene loaded on start can now be changed with wggjStartScene
+
+-> Containers:
+- New class WGGJ_Container
+- This creates a container (invisible by default) that can be used to create a scrolling area
+- Use the configs XScroll and YScroll to enable scrolling for an axis
+- Use the configs XScrollMod and YScrollMod to adjust the scrolling speed
+- Use the config color to make it visible
+- Create elements inside the container, as children, which will make the container their parent. This is done via an array
+- Alternatively, their names can be referenced, and they can be added later, this works too.
+- Elements inside a container are rendered combined at the time of the container
+- Elements inside a container can't leave it, if scrolled too much, they disappear smoothly
+
+-> New configs:
+- All: onUp
+- Container: color, XScroll, YScroll, XScrollMod, YScrollMod
+
+-> Changes:
+- Renamed the element classes Square to WGGJ_Square, Picture to WGGJ_Image and Text to WGGJ_Text
+- Renamed the custom loop() function to customWGGJLoop() and the custom init() to customWGGJInit(). This is to prevent using other loop/init functions, since it is a common name.
+- Renamed onClick() to wggjEventsOnClick(), onPointerUp() to wggjEventsOnPointerUp() and onPointerMove() to wggjEventsOnPointerMove() to prevent more possible compability issues
+
+-> Visual Examples:
+- Added a new main menu (previous mainmenu file is now exampleText) which lets you directly select the thing you want to see
+- Added a tutorial for containers, with some example children and three buttons to play around with
+- Added "go back to main menu" buttons in the top left corner of every tutorial
+
+-> Other:
+- Squares, Images, etc. are now officially called elements, and referred to as such in the documentation
+- Added documentation for Containers
+- Minor code changes, and more comments added
+
+-> Compability notes:
+- If you used a custom loop() or init() function for WGGJ, you need to change the name (see Changes section above)
+- If you interacted with WGGJ's onClick(), onPointerUp() or onPointerMove() functions, you need to change them to their new names (see Changes section above)
