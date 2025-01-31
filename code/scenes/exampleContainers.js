@@ -10,8 +10,9 @@ scenes["exampleContainers"] = new Scene(
 
         createContainer("container", 0.2, 0.2, 0.6, 0.6, {
             color: "black",
-            XScroll: true, XScrollMod: 5,
-            YScroll: true, YScrollMod: 5
+            XScroll: true, XScrollMod: 5, XLimit: [0.3, 0.5],
+            YScroll: true, YScrollMod: 5, YLimit: [1, 1],
+            limitEffect: true
         }, [
             createImage("content1", 0.5, 0.5, 0.1, 0.1, "sosnog", { quadratic: true, centered: true }),
             createImage("content2", 0.2, 0.2, 0.15, 0.1, "sosnog"),
@@ -28,6 +29,22 @@ scenes["exampleContainers"] = new Scene(
 
         createButton("containerLockY", 0.7, 0.85, 0.2, 0.1, "#FFFFFF", () => { objects["container"].YScroll = !objects["container"].YScroll });
         createText("containerLockYText", 0.8, 0.925, "Y: Unlocked", { size: 40 });
+
+        createButton("containerLimits", 0.85, 0.5, 0.1, 0.1, "#FFFFFF", () => {
+            if (objects["container"].limitEffect == true) {
+                objects["container"].limitEffect = false;
+                objects["container"].XLimit = [0, 0];
+                objects["container"].YLimit = [0, 0];
+                objects["containerLimitsText"].text = "Limits OFF";
+            }
+            else {
+                objects["container"].limitEffect = true;
+                objects["container"].XLimit = [0.3, 0.5];
+                objects["container"].YLimit = [1, 1];
+                objects["containerLimitsText"].text = "Limits ON";
+            }
+        });
+        createText("containerLimitsText", 0.9, 0.575, "Limits ON", { size: 32 });
     },
     (tick) => {
         // Loop

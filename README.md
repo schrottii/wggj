@@ -100,7 +100,7 @@ Children can be added by directly generating them with the container, or by refe
 
 createContainer(name, x, y, w, h, config, children);
 
-example: createContainer("upgradesContainer", 0, 0.2, 0.2, 0.8, { YScroll: true }, [ ... ])
+example: createContainer("upgradesContainer", 0, 0.2, 0.2, 0.8, { YScroll: true, YLimit: [1, 0.2] }, [ ... ])
 
 config:
 - color: makes it visible, background color
@@ -108,6 +108,9 @@ config:
 - YScroll: enables scrolling on the Y axis
 - XScrollMod: adjusts scroll speed on the X axis
 - YScrollMod: adjusts scroll speed on the Y axis
+- XLimit: left-right border
+- YLimit: up-down border
+- limitEffect: visual effect when hitting a limit, can have custom color
 
 ## Magic
 ### Changing objects
@@ -240,3 +243,23 @@ Released 2025-01-29
 -> Compability notes:
 - If you used a custom loop() or init() function for WGGJ, you need to change the name (see Changes section above)
 - If you interacted with WGGJ's onClick(), onPointerUp() or onPointerMove() functions, you need to change them to their new names (see Changes section above)
+
+
+
+### v1.2.1
+Released 2025-01-31
+-> New configs:
+- Container: XLimit and YLimit
+- Container: limitEffect
+
+-> Container limits:
+- Define limits using XLimit and YLimit
+- They are 2-element arrays (for example [0.5, 0.5])
+- XLimit is left, right and YLimit is up, down
+- The numbers are a fraction of the screen width/height like other element width/height, not pixels (for that, divide by the width/height)
+- They can be turned off again at any time, which will push you back into the boundaries on the next drag
+- limitEffect can be set to true (for default white), or to a color, to add a border when reaching a limit on any side. Only visible while holding
+
+-> Other:
+- Added limits and a button to disable them to the visual example
+- Slightly expanded info text at the start of the wggj.js file
