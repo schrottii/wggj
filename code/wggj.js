@@ -123,8 +123,8 @@ wggjCanvas.addEventListener("pointermove", wggjEventsOnPointerMove);
 function wggjEventsOnClick(e) {
     wggjMouseDown = true;
 
-    let mouseX = e.clientX;
-    let mouseY = e.clientY;
+    let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
+    let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
 
     for (let c in objects) {
         if (objects[c] == undefined) continue;
@@ -141,8 +141,8 @@ function wggjEventsOnClick(e) {
 function wggjEventsOnPointerUp(e) {
     wggjMouseDown = false;
 
-    let mouseX = e.clientX;
-    let mouseY = e.clientY;
+    let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
+    let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
 
     for (let c in objects) {
         if (objects[c] == undefined) continue;
@@ -158,8 +158,8 @@ function wggjEventsOnPointerUp(e) {
 
 function wggjEventsOnPointerMove(e) {
     if (wggjMouseDown) {
-        let mouseX = e.clientX;
-        let mouseY = e.clientY;
+        let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
+        let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
 
         for (let c in objects) {
             if (objects[c] == undefined) continue;
@@ -167,7 +167,7 @@ function wggjEventsOnPointerMove(e) {
 
             if (mouseX > objects[c].currentX() && mouseY > objects[c].currentY()
                 && mouseX < objects[c].currentW() + objects[c].currentX() && mouseY < objects[c].currentH() + objects[c].currentY()) {
-            // is in the hitbox
+                // is in the hitbox
                 objects[c].onHold(c, e);
             }
         }
@@ -459,8 +459,8 @@ class WGGJ_Container {
     onClick(c, e) {
         // set the start pos of a drag
         if (isNaN(e.clientX) || isNaN(e.clientY)) return false;
-        if (this.XScroll == true) this.recentMouseX = e.clientX;
-        if (this.YScroll == true) this.recentMouseY = e.clientY;
+        if (this.XScroll == true) this.recentMouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
+        if (this.YScroll == true) this.recentMouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
     }
 
     onHold(c, e) {
@@ -470,13 +470,13 @@ class WGGJ_Container {
         if (this.XScroll == true) {
             this.scrolledX = Math.min((this.XLimit[0] != 0 ? this.XLimit[0] : 1e7) * wggjCanvasWidth,
                 Math.max((this.XLimit[1] != 0 ? -this.XLimit[1] : -1e7) * wggjCanvasWidth,
-                    this.scrolledX + (e.clientX - this.recentMouseX) * this.XScrollMod));
-            
+                    this.scrolledX + (e.clientX - wggjCanvas.getBoundingClientRect().x - this.recentMouseX) * this.XScrollMod));
+
         }
         if (this.YScroll == true) {
             this.scrolledY = Math.min((this.YLimit[0] != 0 ? this.YLimit[0] : 1e7) * wggjCanvasHeight,
                 Math.max((this.YLimit[1] != 0 ? -this.YLimit[1] : -1e7) * wggjCanvasHeight,
-                    this.scrolledY + (e.clientY - this.recentMouseY) * this.YScrollMod));
+                    this.scrolledY + (e.clientY - wggjCanvas.getBoundingClientRect().y - this.recentMouseY) * this.YScrollMod));
         }
 
         this.recentMouseX = e.clientX;
@@ -609,8 +609,8 @@ function wggjLoop() {
     // Resize the wggjCanvas
     if (window.innerWidth <= 480) {
         // mobile
-        wggjCanvas.style.width = wggjCanvasWidth = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredMobileWidthMulti) + "px";
-        wggjCanvas.style.height = wggjCanvasHeight = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredMobileHeightMulti) + "px";
+        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredMobileWidthMulti) + "px";
+        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredMobileHeightMulti) + "px";
     }
     else {
         // PC
