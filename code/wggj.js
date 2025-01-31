@@ -609,17 +609,14 @@ function wggjLoop() {
     // Resize the wggjCanvas
     if (window.innerWidth <= 480) {
         // mobile
-        wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredMobileWidthMulti) + "px";
-        wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredMobileHeightMulti) + "px";
+        wggjCanvas.style.width = wggjCanvasWidth = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredMobileWidthMulti) + "px";
+        wggjCanvas.style.height = wggjCanvasHeight = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredMobileHeightMulti) + "px";
     }
     else {
         // PC
         wggjCanvas.style.width = (wggjCanvasWidth = wggjCanvas.width = window.innerWidth * wggjCanvasDesiredPCWidthMulti) + "px";
         wggjCanvas.style.height = (wggjCanvasHeight = wggjCanvas.height = (wggjCanvasDesiredSquare ? window.innerWidth : window.innerHeight) * wggjCanvasDesiredPCHeightMulti) + "px";
     }
-
-    wggjCanvasWidth = window.innerWidth;
-    wggjCanvasHeight = window.innerHeight;
 
     wggjUpdateTextScaling();
     wggjCTX.imageSmoothingEnabled = wggjImageSmoothing;
