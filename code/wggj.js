@@ -622,7 +622,7 @@ function wggjLoop() {
     wggjCTX.imageSmoothingEnabled = wggjImageSmoothing;
 
     // Your own custom loop function
-    if (typeof (customWGGJLoop) != "undefined") customWGGJLoop();
+    if (typeof (customWGGJLoop) != "undefined") customWGGJLoop(wggjDelta);
 
     if (currentScene != "none") {
         // render the current scene
