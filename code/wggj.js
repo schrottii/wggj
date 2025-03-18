@@ -60,6 +60,10 @@ var wggjMouseDown = false;
 var wggjTextScaling = 1;
 var wggjCanvasWidth = 0;
 var wggjCanvasHeight = 0;
+var wggjMouse = {
+    x: 0,
+    y: 0
+}
 
 // change these two with some function to make the canvas not take up the entire screen, temporarily or permanent
 var wggjCanvasDesiredMobileWidthMulti = 1;
@@ -123,16 +127,11 @@ wggjCanvas.addEventListener("pointermove", wggjEventsOnPointerMove);
 function wggjEventsOnClick(e) {
     wggjMouseDown = true;
 
-    let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
-    let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
-
     for (let c in objects) {
         if (objects[c] == undefined) continue;
         if (objects[c].onClick == undefined || objects[c].power == false) continue;
 
-        if (mouseX > objects[c].currentX() && mouseY > objects[c].currentY()
-            && mouseX < objects[c].currentW() + objects[c].currentX() && mouseY < objects[c].currentH() + objects[c].currentY()) {
-            // is in the hitbox
+        if (objects[c].isHit(wggjMouse.x, wggjMouse.y)) {
             objects[c].onClick(c, e);
         }
     }
@@ -141,35 +140,38 @@ function wggjEventsOnClick(e) {
 function wggjEventsOnPointerUp(e) {
     wggjMouseDown = false;
 
-    let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
-    let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
-
     for (let c in objects) {
         if (objects[c] == undefined) continue;
         if (objects[c].onUp == undefined || objects[c].power == false) continue;
 
-        if (mouseX > objects[c].currentX() && mouseY > objects[c].currentY()
-            && mouseX < objects[c].currentW() + objects[c].currentX() && mouseY < objects[c].currentH() + objects[c].currentY()) {
-            // is in the hitbox
+        if (objects[c].isHit(wggjMouse.x, wggjMouse.y)) {
             objects[c].onUp(c, e);
         }
     }
 }
 
 function wggjEventsOnPointerMove(e) {
-    if (wggjMouseDown) {
-        let mouseX = e.clientX - wggjCanvas.getBoundingClientRect().x;
-        let mouseY = e.clientY - wggjCanvas.getBoundingClientRect().y;
+    wggjMouse.x = e.clientX - wggjCanvas.getBoundingClientRect().x;
+    wggjMouse.y = e.clientY - wggjCanvas.getBoundingClientRect().y;
 
-        for (let c in objects) {
-            if (objects[c] == undefined) continue;
-            if (objects[c].onHold == undefined || objects[c].power == false) continue;
+    for (let c in objects) {
+        if (objects[c] == undefined) continue;
+        if ((objects[c].onHold == undefined && objects[c].onMouseMove == undefined) || objects[c].power == false) continue;
 
-            if (mouseX > objects[c].currentX() && mouseY > objects[c].currentY()
-                && mouseX < objects[c].currentW() + objects[c].currentX() && mouseY < objects[c].currentH() + objects[c].currentY()) {
-                // is in the hitbox
-                objects[c].onHold(c, e);
-            }
+        if (objects[c].isHit(wggjMouse.x, wggjMouse.y)) {
+            if (wggjMouseDown && objects[c].onHold != undefined) objects[c].onHold(c, e);
+            if (objects[c].onMouseMove != undefined) objects[c].onMouseMove(c, e);
+        }
+    }
+}
+
+function wggjEventsOnLoop(e) {
+    for (let c in objects) {
+        if (objects[c] == undefined) continue;
+        if (objects[c].onHover == undefined || objects[c].power == false) continue;
+
+        if (objects[c].isHit(wggjMouse.x, wggjMouse.y)) {
+            objects[c].onHover(c, e);
         }
     }
 }
@@ -208,6 +210,8 @@ class WGGJ_Square {
 
         this.onClick = config.onClick ? config.onClick : undefined;
         this.onHold = config.onHold ? config.onHold : undefined;
+        this.onMouseMove = config.onMouseMove ? config.onMouseMove : undefined;
+        this.onHover = config.onHover ? config.onHover : undefined;
 
         this.config = config;
     }
@@ -228,6 +232,16 @@ class WGGJ_Square {
 
     currentH() {
         return ~~(wggjCanvasHeight * this.h + 0.5);
+    }
+
+    isHit(x, y) {
+        // check if a point (perhaps your mouse), with its x and y, is inside this element's boundaries
+        if (x > this.currentX() && y > this.currentY()
+            && x < this.currentW() + this.currentX() && y < this.currentH() + this.currentY()) {
+            // is in the hitbox
+            return true;
+        }
+        return false;
     }
 
     render(parented = false) {
@@ -268,6 +282,8 @@ class WGGJ_Image {
 
         this.onClick = config.onClick ? config.onClick : undefined;
         this.onHold = config.onHold ? config.onHold : undefined;
+        this.onMouseMove = config.onMouseMove ? config.onMouseMove : undefined;
+        this.onHover = config.onHover ? config.onHover : undefined;
 
         this.config = config;
     }
@@ -295,6 +311,16 @@ class WGGJ_Image {
 
     currentH() {
         return wggjCanvasHeight * this.h;
+    }
+
+    isHit(x, y) {
+        // check if a point (perhaps your mouse), with its x and y, is inside this element's boundaries
+        if (x > this.currentX() && y > this.currentY()
+            && x < this.currentW() + this.currentX() && y < this.currentH() + this.currentY()) {
+            // is in the hitbox
+            return true;
+        }
+        return false;
     }
 
     render(parented = false) {
@@ -506,6 +532,16 @@ class WGGJ_Container {
         return wggjCanvasHeight * this.h;
     }
 
+    isHit(x, y) {
+        // check if a point (perhaps your mouse), with its x and y, is inside this element's boundaries
+        if (x > this.currentX() && y > this.currentY()
+            && x < this.currentW() + this.currentX() && y < this.currentH() + this.currentY()) {
+            // is in the hitbox
+            return true;
+        }
+        return false;
+    }
+
     render() {
         if (this.color != false) {
             // background color
@@ -605,6 +641,8 @@ function wggjLoop() {
     // Tick wggjTime
     wggjDelta = Date.now() - wggjTime;
     wggjTime = Date.now();
+
+    wggjEventsOnLoop();
 
     // Resize the wggjCanvas
     if (window.innerWidth <= 480) {

@@ -53,6 +53,8 @@ scenes["exampleButtons"] = new Scene(
             if (coins == 75) objects["header1"].color = "yellow";
             if (coins == 100) objects["exampleButton"].image = "sosnog2";
         });
+        // good place to test onClick, onHold, onMouseMove & onHover
+        //objects["exampleButton"].onHover = objects["exampleButton"].onClick;
 
         createText("myText", 0.5, 0.4, "This is a button. (Square + Clickable)", { size: 32 });
         createText("coinAmount", 0.5, 0.8, "", { size: 32 });

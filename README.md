@@ -8,7 +8,7 @@ All it needs is one file (wggj.js), it can simply be copied. Do not edit it. The
 
 This repo includes a visual example of how it works, visit its page / index.html to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
 
-### Current Version: v1.0
+### Current Version: v1.3
 
 
 
@@ -39,6 +39,12 @@ config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - clickableOnly: when turned to true, it becomes a clickable
 
+- onClick(): event when it's clicked
+- onHold(): event when the mouse is pressed down and in the element's area
+- onMouseMove(): event when the mouse is moving while in the area
+- onHover(): event when the mouse is in the area, moving or not, clicking/holding or not
+
+
 ### Clickable
 This creates a simple clickable area (invisible square)
 
@@ -50,6 +56,7 @@ createClickable(clickableName, x, y, w, h, onClick, config = {});
 example: createClickable("myClickable1", 0, 0, 1, 1, () => { console.log("Screen clicked!") });
 config:
 - same as createSquare
+
 
 ### Image
 This creates an image element
@@ -65,6 +72,12 @@ config:
 - centered: normally, it begins in the top left corner of the x and y. with this it's in the middle instead
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 
+- onClick(): event when it's clicked
+- onHold(): event when the mouse is pressed down and in the element's area
+- onMouseMove(): event when the mouse is moving while in the area
+- onHover(): event when the mouse is in the area, moving or not, clicking/holding or not
+
+
 ### Button
 This creates a button element
 
@@ -77,6 +90,7 @@ example: createButton("myButton1", 0, 0, 0.2, 0.2, "#FFFFFF", () => { coins += 1
 config:
 - same as createImage
 - NOTE: color can act as an image or a color. if it's a hex code starting with # such as #FFFFFF the button becomes a solid color, if it's anything else it's interpreted as an image
+
 
 ### Text
 This creates a text element
@@ -93,6 +107,7 @@ config:
 - align: horizontal text align, default is center
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - noScaling: when turned to true, it does not scale with screen width
+
 
 ### Container
 This creates a container element, which can be the parent of children objects, and be used to create a scrollable area. Invisible by default. 
@@ -111,6 +126,7 @@ config:
 - XLimit: left-right border
 - YLimit: up-down border
 - limitEffect: visual effect when hitting a limit, can have custom color
+
 
 ## Magic
 ### Changing objects
@@ -141,6 +157,7 @@ A scene is called with loadScene(sceneName). The default scene has to be called 
 The scenes/example.js file here has an empty scene. I recommend copying that whenever you create a new one. Decide on a scene name, for example upgrades, and call your file that. I recommend saving it in a folder called scenes. So it could be something like code/scenes/upgrades.js 
 
 At the top you see scenes["example"]. Change example to the name of your scene. Load the scene in a html file such as index.html, like how you load other code files. Below that you see two comments, "Init" and "Loop", one of them is the init, the other is the loop.
+
 
 
 # Patch notes
@@ -263,3 +280,24 @@ Released 2025-01-31
 -> Other:
 - Added limits and a button to disable them to the visual example
 - Slightly expanded info text at the start of the wggj.js file
+
+
+
+## v1.3
+Released 2025-03-18
+-> New configs:
+- Square and Image: onMouseMove
+- Square and Image: onHover
+
+-> Mouse events:
+- Added wggjMouse for more efficient mouse tracking, you can access it too (e. g. wggjMouse.x)
+- Added the 4 mouse functions: onClick, onHold, onMouseMove & onHover - to the documentation:
+- onClick(): event when it's clicked
+- onHold(): event when the mouse is pressed down and in the element's area
+- onMouseMove(): event when the mouse is moving while in the area
+- onHover(): event when the mouse is in the area, moving or not, clicking/holding or not
+
+-> Hitboxes:
+- Added isHit(x, y) for Squares, Images and Containers
+- Used to check if something (such as the mouse) is within the element's boundaries
+- The four mouse functions now use that, and you can use it too
