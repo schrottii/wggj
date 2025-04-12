@@ -40,6 +40,7 @@ scenes["exampleImages"] = new Scene(
         // EXAMPLE IMAGE
         createImage("exampleImage", 0.5, 0.5, 0.1, 0.1, "sosnog");
 
+
         createText("myText", 0.5, 0.4, "This is an image.", { size: 32 });
     },
     (tick) => {
