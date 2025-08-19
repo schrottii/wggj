@@ -8,7 +8,7 @@ All it needs is one file (wggj.js), it can simply be copied. Do not edit it. The
 
 This repo includes a visual example of how it works, visit its page / index.html to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
 
-### Current Version: v1.3
+### Current Version: v1.4
 
 
 
@@ -206,16 +206,6 @@ Released on 2024-12-28
 
 
 
-### Future plans
-- Stronger hitbox/render functions
-- Show hitboxes
-- HOVER
-- Sound system with channels
-- Animations
-- More customization
-
-
-
 ### v1.2
 Released 2025-01-29
 -> New content:
@@ -301,3 +291,42 @@ Released 2025-03-18
 - Added isHit(x, y) for Squares, Images and Containers
 - Used to check if something (such as the mouse) is within the element's boundaries
 - The four mouse functions now use that, and you can use it too
+
+
+
+## v1.4
+Released 2025-08-19
+-> Animations:
+- New core feature: Animations!
+- These can be bound to an object and change it every tick
+- Create an animation with createAnimation(animationName, targetObject, effectFunction, maxDuration, kept)
+- Kill an animation with killAnimation(name)
+- Animation lifespans are ticked AFTER the effect, so they are guaranteed to execute at least once before dying
+- Setting the max duration to 0 makes it unlimited (it will live forever, unless you kill it in some other way)
+- The following are provided for the effect function: target object, delta, animation
+
+-> Visual Examples:
+- Added a visual example for Animations, with 10 different buttons to show various examples of how it can be used
+- If you want to use animations but don't understand them, check the code in exampleAnimations.js
+
+-> Configs:
+- New config for Square, Button and Image: alpha (adjusts visibility, from 0 to 1)
+- Setting power to off via config when creating an object now properly disables it
+- Better config stability
+
+-> Functions:
+- Added isValid(v) function (checks for undefined and similar)
+- Adjusted wggjUpdateTextScaling text scaling (smaller on wide screens)
+
+-> Compability notes:
+- Manually setting power off after creating an object is no longer needed, the config power off works now
+- Make sure the adjusted text scaling doesn't break anything, to change it back, change 1920 to 780
+
+
+
+### Future plans
+- Stronger hitbox/render functions
+- Show hitboxes
+- Sound system with channels
+- Particles
+- More customization
