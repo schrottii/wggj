@@ -324,6 +324,13 @@ Released 2025-08-19
 
 
 
+## v1.4.1
+Released 2025-08-27
+- Adjusted wggjUpdateTextScaling text scaling again (should be better)
+- Fixed issue with tapping on mobile
+
+
+
 ### Future plans
 - Stronger hitbox/render functions
 - Show hitboxes
