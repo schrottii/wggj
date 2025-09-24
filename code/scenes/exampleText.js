@@ -52,10 +52,8 @@ scenes["exampleText"] = new Scene(
         createText("myText", 0.5, 0.5, "Hello World", { size: 24 });
 
         // This sets the audio, reduces its volume and starts it
-        // (note: audio system will get reworked eventually)
-        wggjAudio.src = "audio/lofi-chill-rnb-logo-edit-201356.mp3";
-        wggjAudio.volume = 0.2; // I prefer having the volume a bit down
-        wggjAudio.play();
+        audioPlayMusic("lofi");
+        audioChangeVolume("music", 0.2);
     },
     (tick) => {
         // Loop

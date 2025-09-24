@@ -32,6 +32,11 @@ scenes["mainmenu"] = new Scene(
             loadScene("exampleAnimations");
         });
         createText("buttonText5", 0.2 + 0.2 / 2, 0.775, "Animations", { size: 40 });
+
+        createButton("button6", 0.6, 0.7, 0.2, 0.1, "#FFFFFF", () => {
+            loadScene("exampleAudio");
+        });
+        createText("buttonText6", 0.6 + 0.2 / 2, 0.775, "Audio", { size: 40 });
     },
     (tick) => {
         // Loop
