@@ -240,3 +240,21 @@ Released 2025-09-24
 - Loose variables being moved into the wggj var requires you to change any references to those now deprecated variables
 - ie. FONT = "Arial"; -> wggj.config.font = "Arial";
 - all those changes are listed above
+
+
+
+## v1.5.1
+Released 2025-11-01
+-> Text:
+- Text can now be multi-line using \n
+- There is no limit for lines
+- Automatic linebreaks are not implemented yet
+- Added a page for this to the Text example
+
+-> Other:
+- Added preventDefault for PointerMove and PointerUp (to avoid issues such as zooming in Samsung's mobile browser)
+- also for clicking, but not right mouse button
+- Changed max width for isMobile() from 480 to 640 (mainly for testing purposes)
+
+-> Compability notes:
+- Make sure the changes with preventDefault and isMobile() don't break anything

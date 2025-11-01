@@ -31,7 +31,7 @@ scenes["exampleText"] = new Scene(
             changeHeaderRandomly();
         });
         createButton("button2", 0.7, 0.8, 0.2, 0.1, "#FFFFFF", () => {
-            if (objects["currentPage"].page <= 6) objects["currentPage"].page++;
+            if (objects["currentPage"].page <= 7) objects["currentPage"].page++;
             changeHeaderRandomly();
         });
 
@@ -71,11 +71,12 @@ scenes["exampleText"] = new Scene(
                 "But these basics can be used to create big things.",
                 "Some of my games, such as Rain Collector and Toasty Bird, can show what it's capable of.",
                 "For devs who want to use WGGJ, the relevant files for you are wggj.js and scenes/example.js",
+                "Text can also be\nmulti-line, using the classical\nbackslash n",
                 "The rest of this is just a showcase and examples.",
                 "Press the button to get to the next part"
             ][page - 1];
 
-        if (page == 7) {
+        if (page == 8) {
             objects["partButton"].power = true;
             objects["partButtonText"].power = true;
         }
