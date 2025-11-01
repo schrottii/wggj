@@ -198,7 +198,7 @@ wggjCanvas.addEventListener("pointerleave", wggjEventsOnPointerUp);
 wggjCanvas.addEventListener("pointermove", wggjEventsOnPointerMove);
 
 function wggjEventsOnClick(e) {
-    if (e.buttons != 2) e.preventDefault();
+    if (e.buttons != 2 || isMobile()) e.preventDefault();
     wggj.mouse.x = e.clientX - wggjCanvas.getBoundingClientRect().x;
     wggj.mouse.y = e.clientY - wggjCanvas.getBoundingClientRect().y;
     wggj.mouse.down = true;
