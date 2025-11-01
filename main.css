@@ -5,3 +5,9 @@ html, body {
     margin: 0;
     overflow-y: hidden;
 }
+
+canvas {
+    -webkit-user-drag: none;
+    user-select: none;
+    touch-action: none;
+}

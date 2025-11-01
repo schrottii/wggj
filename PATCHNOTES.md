@@ -249,12 +249,15 @@ Released 2025-11-01
 - Text can now be multi-line using \n
 - There is no limit for lines
 - Automatic linebreaks are not implemented yet
-- Added a page for this to the Text example
 
 -> Other:
 - Added preventDefault for PointerMove and PointerUp (to avoid issues such as zooming in Samsung's mobile browser)
 - also for clicking, but not right mouse button
 - Changed max width for isMobile() from 480 to 640 (mainly for testing purposes)
+
+-> Visual Examples:
+- Added a page for line breaks to the Text example
+- Added drag prevention (css)
 
 -> Compability notes:
 - Make sure the changes with preventDefault and isMobile() don't break anything
