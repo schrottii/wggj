@@ -8,7 +8,7 @@ All it needs is one file (wggj.js), it can simply be copied. Do not edit it. The
 
 This repo includes a visual example of how it works, visit its page / index.html to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
 
-### Current Version: v1.5
+### Current Version: v1.6
 
 
 
@@ -38,8 +38,10 @@ example: createSquare ("mySquare1", 0, 0, 1, 1, "black");
 config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - clickableOnly: when turned to true, it becomes a clickable
+- alpha: visibility (0 - 1)
 
 - onClick(): event when it's clicked
+- onDrag(): event when the mouse is pressed down, moving and in the element's area
 - onHold(): event when the mouse is pressed down and in the element's area
 - onMouseMove(): event when the mouse is moving while in the area
 - onHover(): event when the mouse is in the area, moving or not, clicking/holding or not
@@ -71,8 +73,10 @@ config:
 - quadratic: makes width and height the same
 - centered: normally, it begins in the top left corner of the x and y. with this it's in the middle instead
 - power: when turned to false, it becomes invisible/unclickable (disabled)
+- alpha: visibility (0 - 1)
 
 - onClick(): event when it's clicked
+- onDrag(): event when the mouse is pressed down, moving and in the element's area
 - onHold(): event when the mouse is pressed down and in the element's area
 - onMouseMove(): event when the mouse is moving while in the area
 - onHover(): event when the mouse is in the area, moving or not, clicking/holding or not
@@ -106,6 +110,7 @@ config:
 - size: wggj.config.font size, default is 12px
 - align: horizontal text align, default is center
 - power: when turned to false, it becomes invisible/unclickable (disabled)
+- alpha: visibility (0 - 1)
 - noScaling: when turned to true, it does not scale with screen width
 
 
@@ -160,8 +165,14 @@ At the top you see scenes["example"]. Change example to the name of your scene. 
 
 
 
+# Audio
+...
+
+
+
 # Patch notes
-See PATCHNOTES.md
+See PATCHNOTES.md for patch notes
+includes compability notes to know what needs to be done when updating
 
 ## Future plans
 - Stronger hitbox/render functions

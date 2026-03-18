@@ -31,7 +31,7 @@ scenes["exampleText"] = new Scene(
             changeHeaderRandomly();
         });
         createButton("button2", 0.7, 0.8, 0.2, 0.1, "#FFFFFF", () => {
-            if (objects["currentPage"].page <= 7) objects["currentPage"].page++;
+            if (objects["currentPage"].page <= 8) objects["currentPage"].page++;
             changeHeaderRandomly();
         });
 
@@ -49,7 +49,15 @@ scenes["exampleText"] = new Scene(
         objects["partButtonText"].power = false; // makes it hidden at first
 
         // page content for examples
-        createText("myText", 0.5, 0.5, "Hello World", { size: 24 });
+        createSmartText("myText", 0.5, 0.5, "Hello World", {
+            size: 24,
+            align: "center",
+            /*autoLinebreak: 10*/
+            images: {
+                inlineImage: createImage("inlineUsage", 0, 0, 0.05, 0.05, "gradient"),
+                sosnog: createImage("sosnog", 0, 0, 1, 1, "sosnog")
+            }
+        });
 
         // This sets the audio, reduces its volume and starts it
         audioPlayMusic("lofi");
@@ -71,10 +79,15 @@ scenes["exampleText"] = new Scene(
                 "But these basics can be used to create big things.",
                 "Some of my games, such as Rain Collector and Toasty Bird, can show what it's capable of.",
                 "For devs who want to use WGGJ, the relevant files for you are wggj.js and scenes/example.js",
-                "Text can also be\nmulti-line, using the classical\nbackslash n",
+                "SmartText can also be\nmulti-line, using the classical\nbackslash n",
+                "SmartText can also\nhave images: i{inlineImage} ~ i{inlineImage}\nPrice: 1i{sosnog}\nPrice: 2 i{sosnog}\ni{inlineImage}...i{inlineImage}",
                 "The rest of this is just a showcase and examples.",
                 "Press the button to get to the next part"
             ][page - 1];
+
+        if (page == 7 && Math.random() > 0.99) {
+            objects["myText"].align = ["left", "center", "right"][Math.floor(Math.random() * 3)];
+        }
 
         if (page == 8) {
             objects["partButton"].power = true;

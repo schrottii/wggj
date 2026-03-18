@@ -261,3 +261,45 @@ Released 2025-11-01
 
 -> Compability notes:
 - Make sure the changes with preventDefault and isMobile() don't break anything
+
+
+
+## v1.6
+Released 2026-03-18
+-> SmartText:
+- New class: SmartText
+- similar to Text, but with more features (keeping the normal Text simple and efficient)
+- Line breaks:
+- Supports \n for line breaks (the previous update added this for normal Text, but now only SmartText has it)
+- Supports autoLinebreak, limiting every line to an amount of characters
+- Images inside text:
+- Supports i{imagename} alongside the images config
+- example usage: { img1: createImage(...), img2: "exampleImage"}
+- works for left, center and right aligns alike
+- ignores the image's power state, position and size
+
+-> Rotate:
+- Added smart rotation, using an object's own axis
+- Can be set via config or changed at any time
+- Values: 0 - 365 (degrees)
+- Multiple objects can have a rotation at the same time
+
+-> New configs:
+- Image: rotate
+- SmartText: autoLinebreak
+- SmartText: images
+
+-> Mouse Events:
+- Added onDrag: works like onHold previously did (mouse down in the area and moving)
+- onHold just needs the mouse down in the area, no movement required anymore
+- Distinctions: onClick click + area, onHold hold + area, onDrag hold + move + area, onMouseMove move + area, onHover area
+- Made an image to show which one to use for which case
+
+-> Visual Examples:
+- Adde a tutorial for rotate
+- Updated text page for line breaks and added one for images inside the text (changing align randomly)
+
+-> Compability notes:
+- Text no longer supports \n line breaks, use SmartText instead
+- If you ever wished to properly combine images with text (you have)... SmartText can do that now!
+- onHold no longer requires moving the mouse, if this is relevant for you, just replace with onDrag
