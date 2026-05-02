@@ -1,16 +1,19 @@
 function changeHeaderRandomly() {
-    objects["header1"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1]
-    objects["header1"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1]
-    objects["header1"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1]
-    objects["header2"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1]
-    objects["header2"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1]
-    objects["header2"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1]
+    objects["header1"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1];
+    objects["header1"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1];
+    objects["header1"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1];
+
+    objects["header2"].maxW = [0, 0.1, 0.2][Math.ceil(Math.random() * 3) - 1];
+
+    objects["header2"].align = ["left", "center", "right"][Math.ceil(Math.random() * 3) - 1];
+    objects["header2"].color = ["black", "yellow", "red", "white", "blue"][Math.ceil(Math.random() * 5) - 1];
+    objects["header2"].size = [48, 24, 64][Math.ceil(Math.random() * 3) - 1];
 }
 
 scenes["exampleText"] = new Scene(
     () => {
         // Init
-        // This whole pack gets executed every time the scene is loaded! Define objects here, variables only needed within this scene (-> this file), etc.
+        // This whole area gets executed every time the scene is loaded! Define objects here, variables only needed within this scene (-> this file), etc.
 
         // This creates a square that covers the entire background
         createSquare("bg", 0, 0, 1, 1, "green");

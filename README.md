@@ -2,29 +2,57 @@
 ## WebGame Graphics Javascript
 Schrottii's framework for managing objects and easy rendering of graphics using JavaScript/Canvas. Easy to use and fast performance (for Canvas standards). Primarily made for webgames but can be used for other things too. 
 
-I mostly made this for myself but anyone else can use it too. Explanation how to use it and how it works below in this file. 
+I mostly made this for myself but anyone else can use it too. Documentation on how to use it and how it works below in this file. 
 
 All it needs is one file (wggj.js), it can simply be copied. Do not edit it. The usual files like index.html are obviously needed as well. Everything is explained below.
 
-This repo includes a visual example of how it works, visit its page / index.html to see it in action. For more examples, check games I have made using this, including Toasty Bird and QuoteQuiz (where the idea originated)
+This repo includes a visual example of how it works, visit its page / index.html to see it in action. The code in these visual examples is free to be copied or used as reference. For more examples, consider looking at games I have made using this, such as Toasty Bird and QuoteQuiz (where the idea originated) 
 
-### Current Version: v1.6
+## How it works
+There are different elements: images, text, etc. - and scenes (for example a main menu, or a shop). Each scene has the init, where the objects) are defined. They are then automatically rendered and taken care of. Each scene also has the loop, which is executed constantly, and can be used for things like ticking down time, or checking the value of something and then updating objects accordingly. 
+
+Beyond the basic element types, there are also Containers (acting as a parent for others, and allowing scrolling) and Animations (which get attached to an object, and the wAnis var contains some simple animations that can be re-used). 
+
+It also comes with an audio system, that can play music and multiple sounds at once (and manage them). The global wggj var has some things that can be configured.
+
+### Current Version: v1.7
 
 
 
 # Getting started
-## This section explains how to implement WGGJ and its basic functionality
+This section explains how to implement WGGJ and its basic functionality
 
+## Setup WGGJ
 To setup wggj for a project, follow the simple steps:
 1. Copy the wggj.js file (found in /code) into the code folder
 2. Follow the instructions at the top of wggj.js (some code that needs to be put into main.js or a similar file, and index.html or in whatever html file the canvas should be)
 
-This entire repo is a barebones example of how it can work
+This entire repo (the example scenes) is a simplistic visual example of how it can work
 
+## Creating a Scene
+Make a new file and add this structure (also found in example.js): 
+
+scenes["example"] = new Scene(
+    () => {
+        // Init
+
+    },
+    (tick) => {
+        // Loop
+
+    }
+); 
+
+Replace "example" with the scene's name (used for loadScene and the like), the "mainmenu" scene is loaded by default, unless configured otherwise in the wggj var. Make sure its file is loaded onto the document (after wggj.js is loaded). 
+
+## Adding objects to a Scene 
+Objects of all kinds of elements can be added. The exact types, functions used, parameters and possible configs are explained later in the documentation. Put them into the init part of the scene they should appear in.
 
 
 # Elements
-## All the element explained
+These are the different types an object can have.
+
+## List
 
 ### Square
 This creates a simple single-color square element
@@ -39,6 +67,8 @@ config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - clickableOnly: when turned to true, it becomes a clickable
 - alpha: visibility (0 - 1)
+- aText: attachment (button text)
+- aImage: attachment (button image)
 
 - onClick(): event when it's clicked
 - onDrag(): event when the mouse is pressed down, moving and in the element's area
@@ -74,6 +104,7 @@ config:
 - centered: normally, it begins in the top left corner of the x and y. with this it's in the middle instead
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - alpha: visibility (0 - 1)
+- rotate: 0~365, rotates the image around its own axis
 
 - onClick(): event when it's clicked
 - onDrag(): event when the mouse is pressed down, moving and in the element's area
@@ -112,6 +143,33 @@ config:
 - power: when turned to false, it becomes invisible/unclickable (disabled)
 - alpha: visibility (0 - 1)
 - noScaling: when turned to true, it does not scale with screen width
+- maxW: 0~1 max width in relation to screen width. text won't surpass that limit, but may become squished
+
+
+### SmartText
+It's like Text (and supports everything normal Text does), but has some extra things, at the expense of slightly slower performance, and interpreting characters inside the text (which can be undesired). The number() method can be used to remove those, for example when handling user input.
+
+createSmartText(name, x, y, text, config?);
+
+example: 
+createSmartText("mySmartText", 0.5, 0.5, "Hello World", {
+    size: 24,
+    align: "center",
+    autoLinebreak: 10,
+    images: {
+        inlineImage: createImage("inlineUsage", 0, 0, 0.05, 0.05, "gradient"),
+        sosnog: createImage("sosnog", 0, 0, 1, 1, "sosnog")
+    }
+});
+
+symbols:
+- \n: next line
+- i{name}: inserts an image into the text, where name is the image name defined in images config
+
+config:
+- same as Text
+- images: array. define the images here
+- autoLinebreak: 0 = disabled. automatically adds a line break every x characters
 
 
 ### Container
@@ -132,6 +190,17 @@ config:
 - YLimit: up-down border
 - limitEffect: visual effect when hitting a limit, can have custom color
 
+### RenderLayer
+This element does nothing but execute its render function, and can be used to directly draw to the canvas (useful when you have something in that format that should not be converted), or to execute code in that moment of time. Turning power off makes it not render.
+
+createRenderLayer(name, renderer function);
+
+example: createRenderLayer("customCanvasRender", () => { myCustomParticles.render(); });
+
+config:
+- power
+
+
 
 ## Magic
 ### Changing objects
@@ -150,6 +219,12 @@ If you want an object to reference itself in its own onClick function, use c:
 	c.timesClicked++;
 }
 
+### Attachments
+Squares and Buttons can have text and image directly attached to them. This is done within the config, like so:
+{ aText: {text: "Text", size: 40 }, [... other config]} 
+
+It supports all configs that texts and images have normally. Images are centered. X, Y, width and height are set automatically. These button texts and button images are stored as normal objects, with the parent name and :text or :image suffix ("button1:text", for example) and can be changed like normal. If you want to make an attachment later on (and not during the creation of the parent Square/Button), execute their init() method - it is needed to do the proper binding.
+
 
 
 # Scenes
@@ -166,16 +241,57 @@ At the top you see scenes["example"]. Change example to the name of your scene. 
 
 
 # Audio
-...
+WGGJ is capable of handling audio. There is one music channel, and 16 for sounds. If you wish to play multiple music tracks at the same time, use sounds instead. Audio is defined in the audio var, similar to images. wggjAudioInit() is required, like wggjLoadImages(). Volume of the music player and sound player channels can be adjusted, or they can be muted.
 
+## Functions
+- wggjAudioInit()
+- audioPlayMusic(name)
+- audioPlaySound(name)
+- audioChangeVolume(type, volume, unmute?): type is "music" or "sound", volume is 0~1, if unmute is true then it will override wggj.audio.musicPlayer.muted (or for soundPlayer)
+- audioPause(type): type is "music" or "sound"
+
+
+
+# Animations
+## Creation
+Animations are created like this: 
+createAnimation(name, target, effect, dur?, keep?) 
+- name: name of the animation, only relevant when further using it (such as deleting it manually)
+- target: name of the object it is meant to target
+- effect: (t, d, a) => where t is the target object (allowing for access like t.x), d is delta ticks (adding * d makes it take one second), a is the animation itself (a.pct). Can be lambda or use multiple lines. 
+- dur: duration in seconds. after it is over, the animation will be terminated. default is 0
+- keep: if set to false, the target will return to its previous state. if set to true, all changes done by the animation will be kept. default is false
+
+## Termination
+Animations are deleted automatically when they end, but can also be removed manually:
+killAnimation(name) 
+- kills the animation with this name
+
+## wAnis
+the wAnis var provides some built-in example animations which can be re-used at will. 
+createAnimation("ani1", "exampleImage", wAnis.fadeIn, 1, false); 
+
+If you made animations yourself that you want to re-use, they can be added to wAnis and used the same way, or stored in a separate (similarly working) var. It saves time and keeps things consistent.
+
+wAnis:
+- empty
+- fadeIn
+- fadeOut
+- clickBounce
+- clickPretty
+- moveIn (top, bottom, left, right)
+- moveOut (top, bottom, left, right)
 
 
 # Patch notes
-See PATCHNOTES.md for patch notes
-includes compability notes to know what needs to be done when updating
+See PATCHNOTES.md for patch notes. Includes compability notes to know what needs to be done when updating
 
 ## Future plans
+Some of the things that are planned
+
 - Stronger hitbox/render functions
-- Show hitboxes
 - Particles
+- More SmartText stuff
+- Input element
+- Keybinds
 - More customization

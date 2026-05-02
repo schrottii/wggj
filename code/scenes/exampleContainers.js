@@ -18,7 +18,7 @@ scenes["exampleContainers"] = new Scene(
             createImage("content2", 0.2, 0.2, 0.15, 0.1, "sosnog"),
             createButton("content3", 0.7, 0.2, 0.1, 0.6, "sosnog", () => { containerPoints += 2; }),
             createText("textScoreDisplay", 0.5, 0.3, "Test", { color: "white", size: 40 }),
-            createButton("increaserButton", 0.2, 0.6, 0.2, 0.1, "#FFFFFF", () => { containerPoints += 1; })
+            createButton("increaserButton", 0.2, 0.6, 0.2, 0.1, "#FFFFFF", () => { containerPoints += 1;}, { aText: { text: "+1", size: 24 } })
         ]);
 
         createButton("containerReset", 0.1, 0.85, 0.2, 0.1, "#FFFFFF", () => { objects["container"].resetScroll() });
