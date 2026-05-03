@@ -18,47 +18,47 @@ scenes["exampleAnimations"] = new Scene(
         // makes image bigger for one second
         createButton("anibtn1", 0, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani1", "exampleImage", (t) => { t.w *= 1.01; t.h *= 1.01; }, 1, false);
-        });
+        }, { aText: { text: "Bigger", size: 20 } });
 
         // makes image disappear (not kept, so it comes back)
         createButton("anibtn2", 0.1, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani2", "exampleImage", (t, d) => { t.alpha -= 1 * d; }, 1, false);
-        });
+        }, { aText: { text: "Disappear", size: 20 }});
 
         // makes it disappear, but it doesn't re-appear
         createButton("anibtn3", 0.2, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani3", "exampleImage", (t, d) => { t.alpha -= 1 * d; }, 1, true);
-        });
+        }, { aText: { text: "Disappear forever...", size: 20 }});
 
         // makes it re-appear
         createButton("anibtn4", 0.3, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani4", "exampleImage", (t, d) => { t.alpha += 0.5 * d; }, 2, true);
-        });
+        }, { aText: { text: "...come back", size: 20 }});
 
         // makes it go right...
         createButton("anibtn5", 0.4, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani5", "exampleImage", (t, d) => { t.x += 0.1 * d }, 0, false);
-        });
+        }, { aText: { text: "go right...", size: 20 }});
 
         // until you stop it!
         createButton("anibtn6", 0.5, 0.9, 0.08, 0.08, "button", () => {
             killAnimation("ani5");
-        });
+        }, { aText: { text: "...stop!", size: 20 }});
 
         // forces image into top left corner, makes it bigger...
         createButton("anibtn7", 0.6, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani7", "exampleImage", (t, d) => { t.x = 0; t.y = 0; t.w += 0.1 * d; t.h = t.w; }, 0, false);
-        });
+        }, { aText: { text: "multiple things...", size: 20 }});
 
         // until you stop it!
         createButton("anibtn8", 0.7, 0.9, 0.08, 0.08, "button", () => {
             killAnimation("ani7");
-        });
+        }, { aText: { text: "...stop!", size: 20 }});
 
         // normal move in from the top
         createButton("anibtn9", 0.8, 0.9, 0.08, 0.08, "button", () => {
             createAnimation("ani9", "exampleImage", (t, d, a) => { t.y = ((a.targetPrestate.y + 1) * a.dur) - 1; }, 1, false);
-        });
+        }, { aText: { text: "Move in (top)", size: 20 }});
 
         // slide in from the left
         createButton("anibtn10", 0.9, 0.9, 0.08, 0.08, "button", () => {
@@ -66,7 +66,7 @@ scenes["exampleAnimations"] = new Scene(
                 t.x = Math.min(a.targetPrestate.x, t.x + (a.targetPrestate.x - t.x + 0.01) * d * 3);
                 if (t.x == a.targetPrestate.x) a.kill() }, 0, false);
             objects["exampleImage"].x = -1;
-        });
+        }, { aText: { text: "Slide in (left)", size: 20 }});
     },
     (tick) => {
         // Loop

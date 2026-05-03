@@ -18,18 +18,18 @@ scenes["exampleRotate"] = new Scene(
         // one full spiiin
         createButton("anibtn1", 0, 0.45, 0.08, 0.08, "button", () => {
             createAnimation("ani1", "exampleImage", (t, d) => t.rotate += 365 * d, 1, false);
-        });
+        }, { aText: { text: "Clockwise spin", size: 20 } });
         createButton("anibtn4", 0, 0.85, 0.08, 0.08, "button", () => {
             createAnimation("ani4", "exampleImage2", (t, d) => t.rotate -= 365 * d, 1, false);
-        });
+        }, { aText: { text: "CC spin", size: 20 } });
 
         // rotate clockwise
-        createButton("anibtn2", 0.2, 0.45, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage"].rotate++; } });
-        createButton("anibtn5", 0.2, 0.85, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage2"].rotate += 5; } });
+        createButton("anibtn2", 0.2, 0.45, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage"].rotate++; }, aText: { text: "Rotate", size: 20 } });
+        createButton("anibtn5", 0.2, 0.85, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage2"].rotate += 5; }, aText: { text: "x5", size: 20 } });
 
         // rotate counter clockwise
-        createButton("anibtn3", 0.8, 0.45, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage"].rotate--; } });
-        createButton("anibtn6", 0.8, 0.85, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage2"].rotate -= 5; } });
+        createButton("anibtn3", 0.8, 0.45, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage"].rotate--; }, aText: { text: "CC rotate", size: 20 } });
+        createButton("anibtn6", 0.8, 0.85, 0.08, 0.08, "button", () => { }, { onHold: () => { objects["exampleImage2"].rotate -= 5; }, aText: { text: "CC x5", size: 20 }});
     },
     (tick) => {
         // Loop

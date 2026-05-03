@@ -303,3 +303,70 @@ Released 2026-03-18
 - Text no longer supports \n line breaks, use SmartText instead
 - If you ever wished to properly combine images with text (you have)... SmartText can do that now!
 - onHold no longer requires moving the mouse, if this is relevant for you, just replace with onDrag
+
+
+
+## v1.7
+Released 2026-05-03
+-> Group:
+- New element/class: Group
+- Groups only consist of their own name and their children. No config, no positioning, no rendering. 
+- They are put into groups instead of objects
+- Create using createGroup(groupname, children)
+- The affected children can be changed with addChild(childname), killChild(childname), killAllChildren()
+- Their use is manipulating all the children at once (such as toggling the power for every child, which could be used to toggle popups, UI areas)
+
+-> Group manipulation:
+- Children can be manipulated with set(attribute, state, condition?, exclude?)
+- also: add(...), sub(...), mul(...), div(...), all based on set;
+- attribute: what to change ("power", "x", etc.)
+- state: what to change it to (false, "0", "1", etc. - this is where th five methods differ)
+- condition: optional. can dynamically check if this child should be manipulated (passes its object)
+- exclude: optional. can have names of objects that are in the Group but should not be affected by this manipulation regardless.
+
+-> Container:
+- Container class now inherits Group, meaning it shares the same features (while still having its own stuff, like scrolling and rendering, on top of it)
+- Containers should be used for clearly defined rendering areas or scrollable areas, Groups for working with multiple objects at once in the back-end
+
+-> RenderLayer:
+- New element/class: RenderLayer
+- Create using createRenderLayer(name, renderer function)
+- Used to insert custom code or direct drawing to the canvas, placed between other elements on the Z-axis
+- Provides tick (ms) to the renderer function
+- Config: power
+
+-> Attachments:
+- New feature, basically objects that belong to objects
+- Squares now support two types of attachments, easily creating and binding the respective objects
+- Defined like a config, full support for the respective object configs
+- aText: attaches displayed text to the square (button text)
+- aImage: attaches image to the square, centered by default (button image)
+
+-> Methods:
+- Group, Container: addChild, killChild, killAllChildren, set, add, sub, mul, div
+- Square, Image, Text, SmartText: Added setParent() method, binding a parent to this child
+- SmartText: Added dumber() method, to prevent powerful user input
+
+-> New configs:
+- Square: aText and aImage for attachments
+- All: objectName (automatically defined through the create functions)
+- Text, SmartText: maxW (limits width, 0~1 where 0 disables it)
+- RenderLayer: power
+
+-> wggj variable:
+- Added wggj.debug.hitboxes to show Square/Button hitboxes in black and Image hitboxes in red (only shown if they are clickable in some way)
+- Added wggj.config.imageBasePath to set a path that should be put in front of every image when loading (previously, it was always "images/", which is now the default value. set it before loading the images)
+
+-> Other:
+- Added WGGJ_Base, a base class to combine shared elements from Square, Image and Text (SmartText)
+- Massively expanded the README.md, making "Getting started" more in-depth, adding new sections "How it works", "SmartText", "RenderLayer", "Attachments", and "Audio"
+
+-> Visual Examples:
+- Main menu: converted to attachments, Images page button has a button image instead of text
+- Text page: added maxW (applied randomly when going to the next page)
+- Containers page: the button now has a button text, to show its compability with moving and containers
+- Animations, Audio, Rotate pages: added button texts to all buttons
+
+-> Compability notes: 
+- Everything should still work the same as before. Nothing to worry about!
+- However, you may want to use (or convert old things to) the new elements, or replace separate images for buttons with attachments

@@ -10,38 +10,42 @@ scenes["mainmenu"] = new Scene(
 
         createButton("button1", 0.2, 0.2, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleText");
-        });
-        createText("buttonText1", 0.2 + 0.2 / 2, 0.275, "Text", { size: 40 });
+        }, { aText: { text: "Text", size: 40 } });
 
         createButton("button2", 0.6, 0.2, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleImages");
-        });
-        createText("buttonText2", 0.6 + 0.2 / 2, 0.275, "Images", { size: 40 });
+        }, { aImage: { image: "sosnog" } });
 
         createButton("button3", 0.2, 0.4, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleButtons");
-        });
-        createText("buttonText3", 0.2 + 0.2 / 2, 0.475, "Buttons", { size: 40 });
-        
+        }, { aText: { text: "Buttons", size: 40 } });
+
         createButton("button4", 0.6, 0.4, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleContainers");
-        });
-        createText("buttonText4", 0.6 + 0.2 / 2, 0.475, "Containers", { size: 40 });
+        }, { aText: { text: "Containers", size: 40 } });
 
         createButton("button5", 0.2, 0.6, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleAnimations");
-        });
-        createText("buttonText5", 0.2 + 0.2 / 2, 0.675, "Animations", { size: 40 });
+        }, { aText: { text: "Animations", size: 40 } });
 
         createButton("button6", 0.6, 0.6, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleAudio");
-        });
-        createText("buttonText6", 0.6 + 0.2 / 2, 0.675, "Audio", { size: 40 });
+        }, { aText: { text: "Audio", size: 40 } });
 
         createButton("button7", 0.2, 0.8, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleRotate");
-        });
-        createText("buttonText7", 0.2 + 0.2 / 2, 0.875, "Rotate", { size: 40 });
+        }, { aText: { text: "Rotate", size: 40 } });
+
+        /*
+        createButton("button8", 0.6, 0.8, 0.2, 0.1, "#FFFFFF", () => {
+            loadScene("exampleTilesLayer");
+        }, { aText: { text: "TilesLayer", size: 40 } });
+        */
+
+        // example of a group
+        createGroup("tutorialButtons", ["button1", "button2", "button3", "button4", "button5", "button6", "button7"]);
+        groups.tutorialButtons.set("alpha", 0);
+        createAnimation("fadeIn", "button1" /* dummy */, (t, d, a) => groups.tutorialButtons.set("alpha", a.pct), 1, true);
     },
     (tick) => {
         // Loop
