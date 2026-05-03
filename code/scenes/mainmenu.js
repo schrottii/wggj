@@ -36,9 +36,16 @@ scenes["mainmenu"] = new Scene(
             loadScene("exampleRotate");
         }, { aText: { text: "Rotate", size: 40 } });
 
+        /*
         createButton("button8", 0.6, 0.8, 0.2, 0.1, "#FFFFFF", () => {
             loadScene("exampleTilesLayer");
         }, { aText: { text: "TilesLayer", size: 40 } });
+        */
+
+        // example of a group
+        createGroup("tutorialButtons", ["button1", "button2", "button3", "button4", "button5", "button6", "button7"]);
+        groups.tutorialButtons.set("alpha", 0);
+        createAnimation("fadeIn", "button1" /* dummy */, (t, d, a) => groups.tutorialButtons.set("alpha", a.pct), 1, true);
     },
     (tick) => {
         // Loop

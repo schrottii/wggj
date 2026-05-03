@@ -307,12 +307,16 @@ Released 2026-03-18
 
 
 ## v1.7
+Released 2026-05-03
 -> Group:
 - New element/class: Group
-- Groups only consist of their own name and their children. No config, no positioning.
+- Groups only consist of their own name and their children. No config, no positioning, no rendering. 
+- They are put into groups instead of objects
 - Create using createGroup(groupname, children)
 - The affected children can be changed with addChild(childname), killChild(childname), killAllChildren()
 - Their use is manipulating all the children at once (such as toggling the power for every child, which could be used to toggle popups, UI areas)
+
+-> Group manipulation:
 - Children can be manipulated with set(attribute, state, condition?, exclude?)
 - also: add(...), sub(...), mul(...), div(...), all based on set;
 - attribute: what to change ("power", "x", etc.)
@@ -328,6 +332,7 @@ Released 2026-03-18
 - New element/class: RenderLayer
 - Create using createRenderLayer(name, renderer function)
 - Used to insert custom code or direct drawing to the canvas, placed between other elements on the Z-axis
+- Provides tick (ms) to the renderer function
 - Config: power
 
 -> Attachments:
@@ -348,8 +353,11 @@ Released 2026-03-18
 - Text, SmartText: maxW (limits width, 0~1 where 0 disables it)
 - RenderLayer: power
 
--> Other:
+-> wggj variable:
 - Added wggj.debug.hitboxes to show Square/Button hitboxes in black and Image hitboxes in red (only shown if they are clickable in some way)
+- Added wggj.config.imageBasePath to set a path that should be put in front of every image when loading (previously, it was always "images/", which is now the default value. set it before loading the images)
+
+-> Other:
 - Added WGGJ_Base, a base class to combine shared elements from Square, Image and Text (SmartText)
 - Massively expanded the README.md, making "Getting started" more in-depth, adding new sections "How it works", "SmartText", "RenderLayer", "Attachments", and "Audio"
 
